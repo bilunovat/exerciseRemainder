@@ -1,0 +1,42 @@
+body {
+    height: 200px;
+    width: 300px;
+    background-color: #ffa6ef;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    font-family: "Monospace", Courier;
+    color: #fff;
+}
+
+h1, h2 {
+    margin-top: 10%;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.btn {
+    border-radius: 10%;
+    border: 1px solid;
+    background-color: #fff;
+    color: #a06b96;
+    border-color: #a06b96;
+    padding: 0.5rem 1rem;
+    font-family: inherit;
+    font-size: 1rem;
+}
+
+.btn:hover {
+    background-color: #a06b96;
+    color: white;
+    border-color: #fff;
+}
+
+#time {
+    font-weight: lighter;
+}
+
+#btn-container {
+    margin: 2%;
+    margin-top: 2rem;
+}

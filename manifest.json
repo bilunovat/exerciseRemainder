@@ -1,0 +1,22 @@
+{
+    "manifest_version": 3,
+    "name": "Exercise Reminder 2",
+    "version": "0.0.1",
+    "description": "Use this extension to remind yourself to exercise while working",
+
+    "icons": {
+        "24": "assets/icons8_24.png",
+        "48": "assets/icons8_48.png",
+        "96": "assets/icons8_96.png"
+    },
+
+    "action": {
+        "default_popup": "popup.html"
+    },
+
+    "permissions": ["storage", "alarms", "notifications"],
+
+    "background": {
+        "service_worker": "background.js"
+    }
+}
