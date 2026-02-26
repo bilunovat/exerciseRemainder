@@ -1,43 +1,195 @@
+// Exercise Reminder - Popup UI
+// Handles the popup interface, theme toggling, and timer display
+
+import { CONFIG } from './config.js';
+import { TimerUtils, StorageUtils } from './utils.js';
+
+// ============================================
+// DOM Elements
+// ============================================
+
 const startBtn = document.getElementById("start-btn");
 const resetBtn = document.getElementById("reset-btn");
+const setBtn = document.getElementById("set-btn");
+const themeToggle = document.getElementById("theme-toggle");
+const timeDisplay = document.getElementById("time");
 
-// Starts the countdown
-startBtn.addEventListener("click", () => {
-    chrome.storage.local.get(["isRunning"], (res) => {
-        chrome.storage.local.set({
-            isRunning : !res.isRunning,
-        });
-        updateBtn();
-    });
-});
+// ============================================
+// State
+// ============================================
 
-// Resets the countdown
-resetBtn.addEventListener("click", () => {
-    chrome.storage.local.set({
-        timer: 40 * 60, 
-        isRunning: false,
-    }, () => {
-        startBtn.textContent = "start";
-    });
-});
+let isInputMode = false;
+let inputHours = "";
+let inputMinutes = "";
+let inputSeconds = "";
+let updateInterval = null;
 
-// Updates the values on the countdown
-function updateTime() {
-    chrome.storage.local.get(["timer", "isRunning"], (res) => {
-        const time = document.getElementById("time");
-        const minutes = `${Math.floor(res.timer / 60)}`.padStart(2, "0");
-        const seconds = `${res.timer % 60}`.padStart(2, "0");
-        time.textContent = `${minutes}:${seconds}`;
+// ============================================
+// Theme Management
+// ============================================
 
-        updateBtn(res.isRunning);
-    });
+function applyTheme(isLightMode) {
+    if (isLightMode) {
+        document.documentElement.classList.add("light-mode");
+        themeToggle.textContent = "☀️";
+    } else {
+        document.documentElement.classList.remove("light-mode");
+        themeToggle.textContent = "🌙";
+    }
 }
 
-// Updates the start-pause button
+async function loadTheme() {
+    const isLightMode = await StorageUtils.isLightMode();
+    applyTheme(isLightMode);
+}
+
+themeToggle.addEventListener("click", async () => {
+    const isLightMode = document.documentElement.classList.contains("light-mode");
+    await StorageUtils.setLightMode(!isLightMode);
+    applyTheme(!isLightMode);
+});
+
+// ============================================
+// Timer Controls
+// ============================================
+
+startBtn.addEventListener("click", async () => {
+    if (isInputMode) return;
+    
+    const running = await StorageUtils.isRunning();
+    await StorageUtils.setRunning(!running);
+    updateBtn(!running);
+});
+
+resetBtn.addEventListener("click", async () => {
+    exitInputMode();
+    const duration = await StorageUtils.getCustomDuration();
+    await StorageUtils.set({
+        [CONFIG.STORAGE_KEYS.TIMER]: duration,
+        [CONFIG.STORAGE_KEYS.IS_RUNNING]: false
+    });
+    startBtn.textContent = "start";
+});
+
+// ============================================
+// Custom Timer Input
+// ============================================
+
+setBtn.addEventListener("click", () => {
+    if (isInputMode) {
+        confirmTimeInput();
+    } else {
+        enterInputMode();
+    }
+});
+
+function enterInputMode() {
+    isInputMode = true;
+    inputHours = "";
+    inputMinutes = "";
+    inputSeconds = "";
+    timeDisplay.textContent = "__:__:__";
+    timeDisplay.classList.add("input-mode");
+    setBtn.textContent = "ok";
+    document.addEventListener("keydown", handleKeyInput);
+}
+
+function exitInputMode() {
+    isInputMode = false;
+    timeDisplay.classList.remove("input-mode");
+    setBtn.textContent = "set";
+    document.removeEventListener("keydown", handleKeyInput);
+}
+
+function handleKeyInput(e) {
+    if (!isInputMode) return;
+    
+    if (e.key >= "0" && e.key <= "9") {
+        if (inputHours.length < 2) {
+            inputHours += e.key;
+        } else if (inputMinutes.length < 2) {
+            inputMinutes += e.key;
+        } else if (inputSeconds.length < 2) {
+            inputSeconds += e.key;
+        }
+        updateInputDisplay();
+    } else if (e.key === "Backspace") {
+        if (inputSeconds.length > 0) {
+            inputSeconds = inputSeconds.slice(0, -1);
+        } else if (inputMinutes.length > 0) {
+            inputMinutes = inputMinutes.slice(0, -1);
+        } else if (inputHours.length > 0) {
+            inputHours = inputHours.slice(0, -1);
+        }
+        updateInputDisplay();
+    } else if (e.key === "Enter") {
+        confirmTimeInput();
+    } else if (e.key === "Escape") {
+        exitInputMode();
+        updateTime();
+    }
+}
+
+function updateInputDisplay() {
+    const hours = inputHours.padEnd(2, "_");
+    const minutes = inputMinutes.padEnd(2, "_");
+    const seconds = inputSeconds.padEnd(2, "_");
+    timeDisplay.textContent = `${hours}:${minutes}:${seconds}`;
+}
+
+async function confirmTimeInput() {
+    const hours = parseInt(inputHours || "0", 10);
+    const minutes = parseInt(inputMinutes || "0", 10);
+    const seconds = parseInt(inputSeconds || "0", 10);
+    
+    const validated = TimerUtils.validateTime(hours, minutes, seconds);
+    let totalSeconds = TimerUtils.toSeconds(validated.hours, validated.minutes, validated.seconds);
+    
+    // Minimum timer is 1 second
+    if (totalSeconds < CONFIG.MIN_TIMER_SECONDS) {
+        totalSeconds = CONFIG.MIN_TIMER_SECONDS;
+    }
+    
+    await StorageUtils.set({
+        [CONFIG.STORAGE_KEYS.CUSTOM_DURATION]: totalSeconds,
+        [CONFIG.STORAGE_KEYS.TIMER]: totalSeconds,
+        [CONFIG.STORAGE_KEYS.IS_RUNNING]: false
+    });
+    
+    exitInputMode();
+    startBtn.textContent = "start";
+    updateTime();
+}
+
+// ============================================
+// Display Updates
+// ============================================
+
+async function updateTime() {
+    if (isInputMode) return;
+    
+    const res = await StorageUtils.get([
+        CONFIG.STORAGE_KEYS.TIMER,
+        CONFIG.STORAGE_KEYS.IS_RUNNING
+    ]);
+    
+    const totalSeconds = res[CONFIG.STORAGE_KEYS.TIMER] || 0;
+    timeDisplay.textContent = TimerUtils.formatTime(totalSeconds);
+    updateBtn(res[CONFIG.STORAGE_KEYS.IS_RUNNING]);
+}
+
 function updateBtn(isRunning) {
-    startBtn.textContent = isRunning ? "pause" : "start"
+    startBtn.textContent = isRunning ? "pause" : "start";
 }
 
-// Ensures the values are updated every second
-updateTime();
-setInterval(updateTime, 1000);
+// ============================================
+// Initialization
+// ============================================
+
+function init() {
+    loadTheme();
+    updateTime();
+    updateInterval = setInterval(updateTime, CONFIG.UPDATE_INTERVAL_MS);
+}
+
+init();

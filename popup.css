@@ -2,38 +2,54 @@
     --color-dark-accent: #a06b96;
     --color-background: #ffa6ef;
     --color-text: #fff;
+    --color-button-bg: #fff;
+    --color-button-hover: #a06b96;
+    --color-button-text-hover: #fff;
     --border-radius-sm: 10%;
     --spacing-xs: 0.5rem;
     --spacing-sm: 1rem;
     --spacing-md: 2%;
     --spacing-lg: 2rem;
     --font-size-base: 1rem;
-    --font-size-lg: 1.5rem;
+    --font-size-lg: 2.5rem;
     --popup-height: 200px;
     --popup-width: 300px;
+}
+
+/* Light mode theme */
+:root.light-mode {
+    --color-dark-accent: #ffa6ef;
+    --color-background: #fff;
+    --color-text: #ffa6ef;
+    --color-button-bg: #fbe7f7d2;
+    --color-button-hover: #ffa6ef;
+    --color-button-text-hover: #fff;
 }
 
 body {
     height: var(--popup-height);
     width: var(--popup-width);
     background-color: var(--color-background);
-    text-align: center;
-    align-items: center;
-    justify-content: center;
     font-family: "Monospace", Courier;
     color: var(--color-text);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
 }
 
-h1, h2 {
-    margin-top: 10%;
+#time {
     font-size: var(--font-size-lg);
-    font-weight: bold;
+    font-weight: lighter;
+    margin: 0;
 }
 
 .btn {
     border-radius: var(--border-radius-sm);
     border: 1px solid var(--color-dark-accent);
-    background-color: var(--color-text);
+    background-color: var(--color-button-bg);
     color: var(--color-dark-accent);
     padding: var(--spacing-xs) var(--spacing-sm);
     font-family: inherit;
@@ -43,16 +59,41 @@ h1, h2 {
 }
 
 .btn:hover {
-    background-color: var(--color-dark-accent);
-    color: var(--color-text);
-    border-color: var(--color-text);
-}
-
-#time {
-    font-weight: lighter;
+    background-color: var(--color-button-hover);
+    color: var(--color-button-text-hover);
+    border-color: var(--color-button-text-hover);
 }
 
 #btn-container {
-    margin: var(--spacing-md);
     margin-top: var(--spacing-lg);
+}
+
+/* Theme toggle button */
+#theme-toggle {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+    padding: 5px;
+    opacity: 0.7;
+    transition: opacity 0.2s ease;
+    z-index: 10;
+}
+
+#theme-toggle:hover {
+    opacity: 1;
+}
+
+/* Input mode for timer */
+#time.input-mode {
+    color: var(--color-dark-accent);
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0.5; }
 }
