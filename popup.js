@@ -31,10 +31,8 @@ let updateInterval = null;
 function applyTheme(isLightMode) {
     if (isLightMode) {
         document.documentElement.classList.add("light-mode");
-        themeToggle.textContent = "☀️";
     } else {
         document.documentElement.classList.remove("light-mode");
-        themeToggle.textContent = "🌙";
     }
 }
 

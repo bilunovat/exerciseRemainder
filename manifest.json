@@ -1,7 +1,7 @@
 {
     "manifest_version": 3,
-    "name": "Exercise Reminder 2",
-    "version": "0.0.1",
+    "name": "Exercise Reminder",
+    "version": "0.0.2",
     "description": "Use this extension to remind yourself to exercise while working",
 
     "icons": {
@@ -17,6 +17,7 @@
     "permissions": ["storage", "alarms", "notifications"],
 
     "background": {
-        "service_worker": "background.js"
+        "service_worker": "background.js",
+        "type": "module"
     }
 }
