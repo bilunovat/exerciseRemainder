@@ -33,7 +33,7 @@ A Chrome extension that reminds you to take breaks and exercise while working.
 
 ### Theme Toggle
 
-Click the 🌙/☀️ icon in the top right corner to switch between dark and light modes.
+Click the moon / sun icon in the top right corner to switch between dark and light modes.
 
 ## Project Structure
 
