@@ -1,0 +1,221 @@
+/* Statistics Page Styles */
+/* Imports shared theme variables */
+
+@import url('./shared/theme.css');
+
+.stats-container {
+    width: 320px;
+    height: 400px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.stats-header {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    padding-top: 5px;
+}
+
+.stats-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0;
+    color: var(--text-primary);
+    text-transform: lowercase;
+    cursor: pointer;
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+}
+
+.stats-title:hover {
+    opacity: 0.8;
+}
+
+/* Theme toggle - positioned at top right like popup */
+#theme-toggle {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    z-index: 10;
+    color: #fff;
+}
+
+#theme-toggle:hover {
+    transform: scale(1.08);
+}
+
+/* Light mode: pink icons */
+:root.light-mode #theme-toggle {
+    color: var(--accent-pink);
+}
+
+/* Dark mode: show moon, hide sun */
+#theme-toggle .moon-icon { display: block; }
+#theme-toggle .sun-icon { display: none; }
+
+/* Light mode: show sun, hide moon */
+:root.light-mode #theme-toggle .moon-icon { display: none; }
+:root.light-mode #theme-toggle .sun-icon { display: block; }
+
+/* Main content area with chart and arrows - centered */
+.stats-main {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex: 1;
+}
+
+/* Navigation arrows */
+.nav-arrow {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    color: var(--text-primary);
+    opacity: 0.6;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    border-radius: 50%;
+}
+
+.nav-arrow:hover {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+.nav-arrow:active {
+    transform: scale(0.95);
+}
+
+/* Chart container - takes ~40% of page */
+.chart-container {
+    position: relative;
+    width: 160px;
+    height: 160px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.donut-chart {
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+}
+
+.donut-ring {
+    opacity: 0.3;
+    stroke: #fff;
+}
+
+.donut-segment {
+    transition: stroke-dashoffset 0.5s ease;
+    stroke: #fff;
+}
+
+/* Light mode: pink chart on white background */
+:root.light-mode .donut-ring {
+    stroke: var(--accent-pink);
+}
+
+:root.light-mode .donut-segment {
+    stroke: var(--accent-pink);
+}
+
+.chart-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.chart-time {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.2;
+}
+
+.chart-label {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    text-transform: lowercase;
+    line-height: 1.4;
+}
+
+.avg-label {
+    display: block;
+    font-size: 0.75rem;
+    opacity: 0.7;
+}
+
+/* Period tabs at bottom */
+.period-tabs {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.period-tab {
+    background: none;
+    border: none;
+    font-size: 1rem;
+    font-family: inherit;
+    cursor: pointer;
+    padding: 8px 16px;
+    color: #fff;
+    opacity: 0.5;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    border-radius: 20px;
+}
+
+.period-tab:hover {
+    opacity: 0.8;
+}
+
+.period-tab.active {
+    opacity: 1;
+    color: #fff;
+    font-weight: 600;
+}
+
+.period-tab:active {
+    transform: scale(0.95);
+}
+
+/* Light mode: pink tabs on white background */
+:root.light-mode .period-tab {
+    color: var(--accent-pink);
+}
+
+:root.light-mode .period-tab.active {
+    color: var(--accent-pink);
+}
+
+/* Light mode adjustments for nav arrows */
+:root.light-mode .nav-arrow {
+    color: var(--text-primary);
+}
+
+:root.light-mode .chart-time {
+    color: var(--text-primary);
+}
+
+:root.light-mode .chart-label {
+    color: #666;
+}
