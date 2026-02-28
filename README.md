@@ -29,26 +29,22 @@ A Chrome extension that reminds you to take breaks and exercise while working.
 ### Setting a Custom Timer
 
 1. Click **set**
-2. Type hours, minutes, seconds (e.g., `010530` = 1h 5m 30s)
+2. Type hours, minutes, seconds
 3. Press **Enter** or click **ok**
-
-### Theme Toggle
-
-Click the 🌙/☀️ icon in the top right corner to switch between dark and light modes.
 
 ### Statistics
 
 Click **get statistics** at the bottom of the popup to view your exercise history.
 
 **Navigation:**
-- Use **<** and **>** arrows to navigate between time periods (yesterday, today, tomorrow, etc.)
+- Use **<** and **>** arrows to navigate between time periods 
 - Click **today**, **month**, or **year** tabs to switch between time granularities
+- To go back to the timer click **statistics**
 
 **7-Day Rolling Average:**
 - For the first 7 days, the daily goal is fixed at 4 hours
-- After 7 days of tracked data, the donut chart switches to use your7-day rolling average as the goal
+- After 7 days of tracked data, the statistics switch to use your last 7-day average as the goal
 - This means 100% = you matched your typical daily exercise time
-- The average is recalculated daily based on the last 7 days
 
 ## Project Structure
 
