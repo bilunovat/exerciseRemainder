@@ -1,30 +1,7 @@
-:root {
-    --color-dark-accent: #453450d6;
-    --color-background: #ffa6ef;
-    --color-text: #fff;
-    --color-button-bg: #fff;
-    --color-button-hover: #453450d6;
-    --color-button-text-hover: #fff;
-    --border-radius-sm: 10%;
-    --spacing-xs: 0.5rem;
-    --spacing-sm: 1rem;
-    --spacing-md: 2%;
-    --spacing-lg: 2rem;
-    --font-size-base: 1rem;
-    --font-size-lg: 2.5rem;
-    --popup-height: 250px;
-    --popup-width: 300px;
-}
+/* Popup Page Styles */
+/* Imports shared theme variables */
 
-/* Light mode theme */
-:root.light-mode {
-    --color-dark-accent: #ffa6ef;
-    --color-background: #fff;
-    --color-text: #ffa6ef;
-    --color-button-bg: #fbe7f7d2;
-    --color-button-hover: #ffa6ef;
-    --color-button-text-hover: #fff;
-}
+@import url('./shared/theme.css');
 
 body {
     height: var(--popup-height);
@@ -89,7 +66,7 @@ body {
 
 /* Light mode: pink icons */
 :root.light-mode #theme-toggle {
-    color: #ffa6ef;
+    color: var(--accent-pink);
 }
 
 /* Icon base styles */
@@ -114,4 +91,26 @@ body {
 @keyframes blink {
     0%, 50% { opacity: 1; }
     51%, 100% { opacity: 0.5; }
+}
+
+/* Statistics link */
+#stats-link {
+    position: absolute;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: var(--color-text);
+    text-decoration: none;
+    font-size: 0.85rem;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.2s ease;
+}
+
+#stats-link:hover {
+    opacity: 1;
+}
+
+:root.light-mode #stats-link {
+    color: var(--color-dark-accent);
 }

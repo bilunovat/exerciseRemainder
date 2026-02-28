@@ -1,8 +1,9 @@
 // Exercise Reminder - Popup UI
 // Handles the popup interface, theme toggling, and timer display
 
-import { CONFIG } from './config.js';
-import { TimerUtils, StorageUtils } from './utils.js';
+import { CONFIG } from './shared/config.js';
+import { TimerUtils, StorageUtils } from './shared/utils.js';
+import { ThemeManager } from './shared/theme.js';
 
 // ============================================
 // DOM Elements
@@ -25,27 +26,10 @@ let inputSeconds = "";
 let updateInterval = null;
 
 // ============================================
-// Theme Management
+// Theme Management (using shared ThemeManager)
 // ============================================
 
-function applyTheme(isLightMode) {
-    if (isLightMode) {
-        document.documentElement.classList.add("light-mode");
-    } else {
-        document.documentElement.classList.remove("light-mode");
-    }
-}
-
-async function loadTheme() {
-    const isLightMode = await StorageUtils.isLightMode();
-    applyTheme(isLightMode);
-}
-
-themeToggle.addEventListener("click", async () => {
-    const isLightMode = document.documentElement.classList.contains("light-mode");
-    await StorageUtils.setLightMode(!isLightMode);
-    applyTheme(!isLightMode);
-});
+themeToggle.addEventListener("click", () => ThemeManager.toggle());
 
 // ============================================
 // Timer Controls
@@ -86,7 +70,7 @@ function enterInputMode() {
     inputHours = "";
     inputMinutes = "";
     inputSeconds = "";
-    timeDisplay.textContent = "__:__:__";
+    timeDisplay.textContent = "hh:mm:ss";
     timeDisplay.classList.add("input-mode");
     setBtn.textContent = "ok";
     document.addEventListener("keydown", handleKeyInput);
@@ -185,7 +169,7 @@ function updateBtn(isRunning) {
 // ============================================
 
 function init() {
-    loadTheme();
+    ThemeManager.load();
     updateTime();
     updateInterval = setInterval(updateTime, CONFIG.UPDATE_INTERVAL_MS);
 }

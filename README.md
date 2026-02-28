@@ -8,6 +8,7 @@ A Chrome extension that reminds you to take breaks and exercise while working.
 - **Dark/Light Mode** - Toggle between themes with the moon/sun icon
 - **Desktop Notifications** - Get notified when your timer ends
 - **Persistent Settings** - Your timer and theme preferences are saved
+- **Statistics Tracking** - View your exercise time with daily, monthly, and yearly breakdowns
 
 ## Installation
 
@@ -35,17 +36,48 @@ A Chrome extension that reminds you to take breaks and exercise while working.
 
 Click the 🌙/☀️ icon in the top right corner to switch between dark and light modes.
 
+### Statistics
+
+Click **get statistics** at the bottom of the popup to view your exercise history.
+
+**Navigation:**
+- Use **<** and **>** arrows to navigate between time periods (yesterday, today, tomorrow, etc.)
+- Click **today**, **month**, or **year** tabs to switch between time granularities
+
+**7-Day Rolling Average:**
+- For the first 7 days, the daily goal is fixed at 4 hours
+- After 7 days of tracked data, the donut chart switches to use your7-day rolling average as the goal
+- This means 100% = you matched your typical daily exercise time
+- The average is recalculated daily based on the last 7 days
+
 ## Project Structure
 
 ```
-├── manifest.json      # Extension configuration
-├── config.js          # Constants and settings
-├── utils.js           # Timer and storage utilities
-├── background.js      # Service worker (timer logic)
-├── popup.js           # UI logic
-├── popup.html/css     # UI layout and styles
-└── assets/            # Extension icons
+├── manifest.json          # Extension configuration
+├── background.js          # Service worker (timer logic, statistics tracking)
+├── popup.js               # Popup UI logic
+├── popup.html/css         # Popup UI layout and styles
+├── statistics.js          # Statistics page logic
+├── statistics.html/css    # Statistics page layout and styles
+├── shared/
+│   ├── config.js          # Constants and settings (timer, statistics goals)
+│   ├── utils.js           # Timer, date, and storage utilities
+│   ├── theme.js           # Shared theme management module
+│   └── theme.css          # CSS variables for theming
+└── assets/                # Extension icons
 ```
+
+## Architecture
+
+The extension follows a modular architecture with ES modules:
+
+- **shared/config.js** - Centralized configuration constants
+- **shared/utils.js** - Utility functions:
+  - `TimerUtils` - Time formatting and validation
+  - `DateUtils` - Date key generation for statistics
+  - `StorageUtils` - Promise-based Chrome storage API with error handling
+- **shared/theme.js** - `ThemeManager` module for consistent theme handling
+- **shared/theme.css** - CSS custom properties for consistent styling
 
 ## License
 
