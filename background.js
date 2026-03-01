@@ -1,8 +1,7 @@
-// Exercise Reminder - Background Service Worker
+// Background Service Worker
 // This file handles the timer logic and notifications
 
-import { CONFIG } from './shared/config.js';
-import { StorageUtils, DateUtils } from './shared/utils.js';
+import { CONFIG, StorageUtils, DateUtils } from './shared/index.js';
 
 // ============================================
 // Alarm Management

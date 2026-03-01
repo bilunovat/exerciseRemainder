@@ -1,9 +1,7 @@
 // Exercise Reminder - Statistics Page
 // Displays daily, monthly, and yearly exercise statistics
 
-import { CONFIG } from './shared/config.js';
-import { StorageUtils, DateUtils } from './shared/utils.js';
-import { ThemeManager } from './shared/theme.js';
+import { CONFIG, StorageUtils, DateUtils, ThemeManager } from './shared/index.js';
 
 // ============================================
 // State
@@ -31,7 +29,7 @@ const chartLabel = document.getElementById("chart-label");
 const periodTabs = document.querySelectorAll(".period-tab");
 
 // ============================================
-// Theme Management (using shared ThemeManager)
+// Theme Management
 // ============================================
 
 themeToggle.addEventListener("click", () => ThemeManager.toggle());

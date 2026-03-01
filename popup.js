@@ -1,9 +1,6 @@
-// Exercise Reminder - Popup UI
 // Handles the popup interface, theme toggling, and timer display
 
-import { CONFIG } from './shared/config.js';
-import { TimerUtils, StorageUtils } from './shared/utils.js';
-import { ThemeManager } from './shared/theme.js';
+import { CONFIG, TimerUtils, StorageUtils, ThemeManager } from './shared/index.js';
 
 // ============================================
 // DOM Elements
@@ -26,7 +23,7 @@ let inputSeconds = "";
 let updateInterval = null;
 
 // ============================================
-// Theme Management (using shared ThemeManager)
+// Theme Management
 // ============================================
 
 themeToggle.addEventListener("click", () => ThemeManager.toggle());
