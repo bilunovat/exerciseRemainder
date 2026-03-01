@@ -1,7 +1,11 @@
 /* Statistics Page Styles */
-/* Imports shared theme variables */
 
 @import url('./shared/theme.css');
+
+body {
+    background-color: var(--color-statistics-bg);
+    margin: 0;
+}
 
 .stats-container {
     width: 320px;
@@ -37,7 +41,7 @@
     opacity: 0.8;
 }
 
-/* Theme toggle - positioned at top right like popup */
+/* Theme toggle */
 #theme-toggle {
     position: absolute;
     top: 10px;
@@ -67,7 +71,7 @@
 :root.light-mode #theme-toggle .moon-icon { display: none; }
 :root.light-mode #theme-toggle .sun-icon { display: block; }
 
-/* Main content area with chart and arrows - centered */
+/* Main content area */
 .stats-main {
     width: 100%;
     display: flex;
@@ -97,7 +101,7 @@
     transform: scale(0.95);
 }
 
-/* Chart container - takes ~40% of page */
+/* Chart container */
 .chart-container {
     position: relative;
     width: 160px;

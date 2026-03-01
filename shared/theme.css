@@ -1,14 +1,14 @@
 /* Shared Theme Variables */
-/* Import this file in all HTML pages */
 
 :root {
     /* Colors */
-    --color-dark-accent: #453450d6;
-    --color-background: #ffa6ef;
+    --color-dark-accent: #ffa6ef;
+    --color-background: #453450d6;
+    --color-statistics-bg: #ffa6ef;
     --color-text: #fff;
-    --color-button-bg: #fff;
-    --color-button-hover: #453450d6;
-    --color-button-text-hover: #fff;
+    --color-button-bg: #ffa6ef;
+    --color-button-hover: #fff;
+    --color-button-text-hover: #ffa6ef;
     
     /* Spacing */
     --border-radius-sm: 10%;
@@ -35,6 +35,7 @@
 :root.light-mode {
     --color-dark-accent: #ffa6ef;
     --color-background: #fff;
+    --color-statistics-bg: #fff;
     --color-text: #ffa6ef;
     --color-button-bg: #fbe7f7d2;
     --color-button-hover: #ffa6ef;
