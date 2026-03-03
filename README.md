@@ -1,7 +1,7 @@
 # Exercise Reminder
 
-A Chrome extension that reminds you to take breaks and exercise while working.
-To install the extension from Chrome Web Store click [here](https://chromewebstore.google.com/detail/exercise-reminder/nalpgnpidnpkbdjnpphliifigadeccfd?hl=en-GB&utm_source=ext_sidebar) 
+A Chrome extension that reminds you to take breaks and exercise while working.<br>
+**To install the extension from Chrome Web Store click [here](https://chromewebstore.google.com/detail/exercise-reminder/nalpgnpidnpkbdjnpphliifigadeccfd?hl=en-GB&utm_source=ext_sidebar)**
 
 ## Features
 
